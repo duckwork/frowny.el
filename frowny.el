@@ -28,9 +28,16 @@
   "Customization group for `frowny'."
   :group 'convenience)
 
-(defcustom frowny-eyes "[:=]"
+(defcustom frowny-eyes "\\(?::-\\|[:=]\\)"
   "Regex to match frowny eyes to."
   :type 'string)
+
+(defcustom frowny-eyes-looking-back-limit 2
+  "Number of characters to limit in `frowny-self-insert' for eyes.
+Recommend keeping this only as long as the longest alternative in
+`frowny-eyes', to save memory; see `looking-back' for more
+details."
+  :type 'integer)
 
 (defcustom frowny-modes t
   "Modes to enable function `frowny-mode' in.
@@ -42,7 +49,7 @@ With an value of t, enable it in all modes."
   "Insert a frowny, or insert the character \"(\" N times."
   (interactive "p")  
   (cond
-   ((looking-back frowny-eyes 1)
+   ((looking-back frowny-eyes frowny-eyes-looking-back-limit)
     (dotimes (_ N)
       (insert "(")))
    (t (self-insert-command N ?\())))
