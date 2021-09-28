@@ -5,7 +5,8 @@
 /For alphapapa, so he can insert frownies with electric-pair-mode./
 
 This package ships `frowny-mode', which enables inserting a single "(" when
-after a ":" -- meaning it'll insert :( without closing the paren.
+after a ":" -- meaning it'll insert :( without closing the parentheses for
+modes like =electric-pair-mode=, =paredit-mode=, and others.
 
 * Installation
 
@@ -28,7 +29,10 @@ pairs, e.g.
   (add-hook 'erc-mode-hook #'frowny-mode)
 #+end_src
 
+Or you can enable =global-frowny-mode=, which enables frowny in every buffer.
+If you want to enable =global-frowny-mode= but only for some modes, customize =frowny-modes=.
+
 * Still to do
 
-I should probably make a =global-frowny-mode=, but I haven't yet.  It'd be super
-easy though.  PRs welcome!
+I could do a =frowny-prog-mode= that checks whether the point is in a comment or
+not, and frowny accordingly.
