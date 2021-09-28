@@ -32,6 +32,12 @@
   "Regex to match frowny eyes to."
   :type 'string)
 
+(defcustom frowny-modes t
+  "Modes to enable function `frowny-mode' in.
+With an value of t, enable it in all modes."
+  :type '(choice (const :tag "All modes" t)
+                 (repeat :tag "Modes" function)))
+
 (defun frowny-self-insert (N)
   "Insert a frowny, or insert the character \"(\" N times."
   (interactive "p")  
@@ -41,6 +47,10 @@
       (insert "(")))
    (t (self-insert-command N ?\())))
 
+(defun frowny-mode--turn-on ()
+  "Turn on function `frowny-mode'."
+  (frowny-mode +1))
+
 ;;;###autoload
 (define-minor-mode frowny-mode
   "Minor mode for inserting frownies."
@@ -49,6 +59,12 @@
   :keymap (let ((map (make-sparse-keymap)))
             (define-key map "(" #'frowny-self-insert)
             map))
+
+;;;###autoload
+(define-globalized-minor-mode global-frowny-mode
+  frowny-mode
+  frowny-mode--turn-on
+  :predicate frowny-modes)
 
 (provide 'frowny)
 ;;; frowny.el ends here
