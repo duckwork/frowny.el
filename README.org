@@ -1,5 +1,7 @@
 #+TITLE: Frowny.el
 
+#+HTML: <img src="images/mascot.png" align="right">
+
 /For alphapapa, so he can insert frownies with electric-pair-mode./
 
 This package ships `frowny-mode', which enables inserting a single "(" when
