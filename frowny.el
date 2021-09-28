@@ -1,9 +1,13 @@
-;;; frowny.el --- insert frownies better             -*- lexical-binding: t; -*-
+;;; frowny.el --- Insert frownies easily -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021  Case Duckworth
 
 ;; Author: Case Duckworth <acdw@acdw.net>
+;; Homepage: https://github.com/duckwork/frowny.el
 ;; Keywords: convenience
+
+;; Package-Version: 0.1
+;; Package-Requires: ((emacs "24.1"))
 
 ;;; License:
 
@@ -47,7 +51,7 @@ With an value of t, enable it in all modes."
 
 (defun frowny-self-insert (N)
   "Insert a frowny, or insert the character \"(\" N times."
-  (interactive "p")  
+  (interactive "p")
   (cond
    ((looking-back frowny-eyes frowny-eyes-looking-back-limit)
     (dotimes (_ N)
