@@ -32,7 +32,36 @@ pairs, e.g.
 Or you can enable =global-frowny-mode=, which enables frowny in every buffer.
 If you want to enable =global-frowny-mode= but only for some modes, customize =frowny-modes=.
 
+* Customization
+
+There are a (growing?) number of customization options available for
+=frowny-mode=:
+
+- =frowny-eyes=: the regex to look for when seeing if =(= is completing a frowny.
+  Default: =\\(?::-\\|[:=]\\)=, which captures frownies like =:(=, =:-(=, and ==(=.
+  I'd recommend replacing it with an =rx= form, like this:
+
+#+begin_src emacs-lisp
+  (setq frowny-eyes (rx (or “:” “:-” “=” “:'-”)))=.
+#+end_src
+
+- =frowny-eyes-looking-back-limit=: =frowny= uses =looking-back= to determine whether
+  the =(= you type is part of a frowny.  Emacs's manual recommends limiting the
+  number of characters =looking-back= searches for performance reasons, so
+  I recommend setting this number to the maximum length of the strings you have
+  as options in =frowny-eyes=.  As such, the default is 2.
+- =frowny-modes=: When enabling =global-frowny-mode=, you might not want frowny to
+  apply to every buffer.  Add modes to this list to only apply frowny to them.
+  By default, frowny applies to every mode.
+
+Of course, you can always customize these options using Emacs's Customize functionality.
+
 * Still to do
 
-I could do a =frowny-prog-mode= that checks whether the point is in a comment or
-not, and frowny accordingly.
+- I should probably make =frowny-modes= more … complex, and allow specifying
+  modes /not/ to apply frowny to.
+- I could do a =frowny-prog-mode= that checks whether the point is in a comment
+  or not, and frowny accordingly.
+- It's been brought to my attention that there are cases in which a smiley =:)=
+  might be messed up when using =electric-pair-mode= … so although it pains me,
+  =frowny= will also support smileys. /blech/ !
