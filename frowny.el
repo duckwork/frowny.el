@@ -51,14 +51,18 @@ With an value of t, enable it in all modes."
   :type '(choice (const :tag "All modes" t)
                  (repeat :tag "Modes" function)))
 
-(defun frowny--insert-character (character number)
 ;;; Functions
 
+(defun frowny--insert-character (character number pred)
   "Insert CHARACTER NUMBER times, depending on frowniness.
-Internal: use `frowny-self-insert-frowny' or
+Frowniness is determined by whether CHARACTER is proceeded by any
+of the regexen in `frowny-eyes', and if PRED is non-nil.
+
+ Internal: use `frowny-self-insert-frowny' or
 `frowny-self-insert-smiley' instead."
   (cond
-   ((looking-back frowny-eyes frowny-eyes-looking-back-limit)
+   ((and pred
+         (looking-back frowny-eyes frowny-eyes-looking-back-limit))
     (dotimes (_ number)
       (insert character)))
    (t (self-insert-command number character))))
@@ -66,7 +70,7 @@ Internal: use `frowny-self-insert-frowny' or
 (defun frowny-self-insert-frowny (N)
   "Insert \"(\" N times to complete a frowny."
   (interactive "p")
-  (frowny--insert-character ?\( N))
+  (frowny--insert-character ?\( N t))
 
 (define-obsolete-function-alias 'frowny-self-insert 'frowny-self-insert-frowny
   "0.2"
@@ -75,11 +79,37 @@ Internal: use `frowny-self-insert-frowny' or
 (defun frowny-self-insert-smiley (N)
   "Insert \")\" N times to complete a smiley."
   (interactive "p")
-  (frowny--insert-character ?\) N))
+  (frowny--insert-character ?\) N t))
+
+(defun frowny--in-comment-p (&optional pos)
+  "Return t if POS (default: point) is in comment, else nil."
+  (and (nth 4 (syntax-ppss pos))
+       t))
+
+(defun frowny--in-string-p (&optional pos)
+  "Return t if POS (default: point) is in string, else nil."
+  (and (nth 3 (syntax-ppss pos))
+       t))
+
+(defun frowny-prog-insert-frowny (N)
+  "Insert \"(\" N times to complete a frowny in a string or comment."
+  (interactive "p")
+  (frowny--insert-character ?\( N (or (frowny--in-comment-p)
+                                      (frowny--in-string-p))))
+
+(defun frowny-prog-insert-smiley (N)
+  "Insert \")\" N times to complete a smiley in a string or comment."
+  (interactive "p")
+  (frowny--insert-character ?\) N (or (frowny--in-comment-p)
+                                      (frowny--in-string-p))))
+
+;;; Modes
 
 (defun frowny-mode--turn-on ()
   "Turn on function `frowny-mode'."
-  (frowny-mode +1))
+  (if (derived-mode-p 'prog-mode)
+      (frowny-mode +1)
+    (frowny-prog-mode +1)))
 
 ;;;###autoload
 (define-minor-mode frowny-mode
@@ -89,6 +119,16 @@ Internal: use `frowny-self-insert-frowny' or
   :keymap (let ((map (make-sparse-keymap)))
             (define-key map "(" #'frowny-self-insert-frowny)
             (define-key map ")" #'frowny-self-insert-smiley)
+            map))
+
+;;;###autoload
+(define-minor-mode frowny-prog-mode
+  "Minor mode for inserting frownies in comments and strings only."
+  :init t
+  :lighter "=("
+  :keymap (let ((map (make-sparse-keymap)))
+            (define-key map "(" #'frowny-prog-insert-frowny)
+            (define-key map ")" #'frowny-prog-insert-smiley)
             map))
 
 ;;;###autoload
