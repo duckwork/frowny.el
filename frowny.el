@@ -28,6 +28,8 @@
 
 ;;; Code:
 
+;;; Customization
+
 (defgroup frowny nil
   "Customization group for `frowny'."
   :group 'convenience)
@@ -50,6 +52,8 @@ With an value of t, enable it in all modes."
                  (repeat :tag "Modes" function)))
 
 (defun frowny--insert-character (character number)
+;;; Functions
+
   "Insert CHARACTER NUMBER times, depending on frowniness.
 Internal: use `frowny-self-insert-frowny' or
 `frowny-self-insert-smiley' instead."
@@ -60,7 +64,7 @@ Internal: use `frowny-self-insert-frowny' or
    (t (self-insert-command number character))))
 
 (defun frowny-self-insert-frowny (N)
-  "Insert \"(\" N times."
+  "Insert \"(\" N times to complete a frowny."
   (interactive "p")
   (frowny--insert-character ?\( N))
 
@@ -69,7 +73,7 @@ Internal: use `frowny-self-insert-frowny' or
   "Insert a frowny, or insert the character \"(\" N times.")
 
 (defun frowny-self-insert-smiley (N)
-  "Insert \")\" N times."
+  "Insert \")\" N times to complete a smiley."
   (interactive "p")
   (frowny--insert-character ?\) N))
 
