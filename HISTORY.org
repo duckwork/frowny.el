@@ -1,0 +1,41 @@
+#+TITLE: The Frowny.el Origin Story
+
+It was a bright and sunny afternoon.  A cadre of hackers were nestled deep in their respective caves, remotely distracting each other from work that they were not doing, anyway.  We now join this program, already in progress:
+
+#+begin_example
+[12:40:40] alphapapa​> Guix is conspicuously absent :() 
+[12:40:58] alphapapa​> (and, yes, electric-pair-mode messes up my frowny faces sometimes) 
+[12:42:21] TitanOfOld​> alphapapa: I've been considering switching to smartparens for that reason. (https://github.com/Fuco1/smartparens) 
+[12:42:46] alphapapa​> I use lispy for Lisp, and electric-pair-global-mode elsewhere 
+[12:42:59] acdw​> alphapapa i ahve a hook to disable electric-pair-mode for chat buffers 
+[12:43:10] TitanOfOld​> I haven't had the nerve to really make such a potentially massive disruption to my workflow. 
+[12:43:15] daviwil​> Lispy is pretty good, but annoys me fairly frequently :) 
+[12:43:17] acdw​> do you turn electric-pair-mode off for lispy?  
+[12:43:26] daviwil​> Lispy auto-pairs on its own 
+[12:43:28] alphapapa​> In reply to acdw:
+  > alphapapa i ahve a hook to disable electric-pair-mode for chat buffers 
+
+But I want electric-pair-mode everywhere except when I type a frowny face :() 
+[12:44:02] alphapapa​> Workaround: stop typing frowny faces (worse is better) 
+[12:44:29] acdw​> alphapapa hmmmmmmm 
+[12:44:40] acdw​> i feel like, of all of us you're the best-positioned to write a function 
+[12:44:44] acdw​> package* 
+[12:44:47] acdw​> frowny.el :) 
+[12:44:51] daviwil​> You have to say *haz a sad* instead 
+[12:45:43] daviwil​> Or we can invent new Lisp-inspired vernacular like `nil` == :( 
+[12:46:19] daviwil​> I'm fully cons'ed and nil-pilled 
+[12:46:53] alphapapa​> I feel like a # belongs in there somewhere 
+...
+[12:57:01] acdw​> i'm trying to write your frowny.el, alphapapa --- so i need a funciton that'll either input the current character (if that's a "(") or like, () 
+[12:57:05] acdw​> oh you know what, nvm 
+...
+[13:08:20] acdw​> alphapapa https://github.com/duckwork/frowny.el 
+[13:08:35] acdw​> for you :) 
+[13:15:42] alphapapa​> In reply to acdw:
+  > alphapapa https://github.com/duckwork/frowny.el 
+
+LOL you actually did it 
+[13:16:11] acdw​> alphapapa u know it buddy :) 
+#+end_example
+
+Total elapsed time from idea to published Emacs package: 23 minutes, 51 seconds.  That's just ducky.
