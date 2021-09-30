@@ -6,7 +6,7 @@
 ;; Homepage: https://github.com/duckwork/frowny.el
 ;; Keywords: convenience
 
-;; Package-Version: 0.1
+;; Package-Version: 0.2
 ;; Package-Requires: ((emacs "24.1"))
 
 ;;; License:
@@ -49,14 +49,29 @@ With an value of t, enable it in all modes."
   :type '(choice (const :tag "All modes" t)
                  (repeat :tag "Modes" function)))
 
-(defun frowny-self-insert (N)
-  "Insert a frowny, or insert the character \"(\" N times."
-  (interactive "p")
+(defun frowny--insert-character (character number)
+  "Insert CHARACTER NUMBER times, depending on frowniness.
+Internal: use `frowny-self-insert-frowny' or
+`frowny-self-insert-smiley' instead."
   (cond
    ((looking-back frowny-eyes frowny-eyes-looking-back-limit)
-    (dotimes (_ N)
-      (insert "(")))
-   (t (self-insert-command N ?\())))
+    (dotimes (_ number)
+      (insert character)))
+   (t (self-insert-command number character))))
+
+(defun frowny-self-insert-frowny (N)
+  "Insert \"(\" N times."
+  (interactive "p")
+  (frowny--insert-character ?\( N))
+
+(define-obsolete-function-alias 'frowny-self-insert 'frowny-self-insert-frowny
+  "0.2"
+  "Insert a frowny, or insert the character \"(\" N times.")
+
+(defun frowny-self-insert-smiley (N)
+  "Insert \")\" N times."
+  (interactive "p")
+  (frowny--insert-character ?\) N))
 
 (defun frowny-mode--turn-on ()
   "Turn on function `frowny-mode'."
@@ -68,7 +83,8 @@ With an value of t, enable it in all modes."
   :init t
   :lighter ":("
   :keymap (let ((map (make-sparse-keymap)))
-            (define-key map "(" #'frowny-self-insert)
+            (define-key map "(" #'frowny-self-insert-frowny)
+            (define-key map ")" #'frowny-self-insert-smiley)
             map))
 
 ;;;###autoload

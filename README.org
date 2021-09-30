@@ -8,6 +8,12 @@ This package ships `frowny-mode', which enables inserting a single "(" when
 after a ":" -- meaning it'll insert :( without closing the parentheses for
 modes like =electric-pair-mode=, =paredit-mode=, and others.
 
+* Version 0.2
+
+Just released: Version 0.2, /now with smileys/!  Yes, if you're one of those
+happy-go-lucky people who just /has/ to smile all the time, frowny.el is now for
+you as well.  Go nuts, ya filthy animal.
+
 * Installation
 
 I use [[https://github.com/raxod502/straight.el][straight.el]], which looks like this:
@@ -42,7 +48,7 @@ There are a (growing?) number of customization options available for
   I'd recommend replacing it with an =rx= form, like this:
 
 #+begin_src emacs-lisp
-  (setq frowny-eyes (rx (or “:” “:-” “=” “:'-”)))=.
+  (setq frowny-eyes (rx (or ":" ":-" "=" ":'-")))=.
 #+end_src
 
 - =frowny-eyes-looking-back-limit=: =frowny= uses =looking-back= to determine whether
@@ -62,6 +68,3 @@ Of course, you can always customize these options using Emacs's Customize functi
   modes /not/ to apply frowny to.
 - I could do a =frowny-prog-mode= that checks whether the point is in a comment
   or not, and frowny accordingly.
-- It's been brought to my attention that there are cases in which a smiley =:)=
-  might be messed up when using =electric-pair-mode= … so although it pains me,
-  =frowny= will also support smileys. /blech/ !
