@@ -79,7 +79,9 @@ Internal: use `frowny-self-insert-frowny' or
 
 (defun frowny-mode--turn-on ()
   "Turn on function `frowny-mode'."
-  (frowny-mode +1))
+  (when (or (eq frowny-modes t)
+            (apply #'derived-mode-p frowny-modes))
+    (frowny-mode +1)))
 
 ;;;###autoload
 (define-minor-mode frowny-mode
@@ -94,8 +96,7 @@ Internal: use `frowny-self-insert-frowny' or
 ;;;###autoload
 (define-globalized-minor-mode global-frowny-mode
   frowny-mode
-  frowny-mode--turn-on
-  :predicate frowny-modes)
+  frowny-mode--turn-on)
 
 (provide 'frowny)
 ;;; frowny.el ends here
