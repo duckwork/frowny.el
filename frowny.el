@@ -45,15 +45,23 @@ Recommend keeping this only as long as the longest alternative in
 details."
   :type 'integer)
 
+;;;###autoload
 (defcustom frowny-modes t
   "Modes to enable function `frowny-mode' in.
 With an value of t, enable it in all modes."
   :type '(choice (const :tag "All modes" t)
                  (repeat :tag "Modes" function)))
 
-(defun frowny--insert-character (character number)
+;;;###autoload
+(defcustom frowny-inhibit-modes '(special-mode)
+  "Modes to inhibit function `frowny-mode' in.
+A mode's membership in `frowny-inhibit-modes' overrides its
+membership in `frowny-modes'."
+  :type '(repeat :tag "Modes" function))
+
 ;;; Functions
 
+(defun frowny--insert-character (character number)
   "Insert CHARACTER NUMBER times, depending on frowniness.
 Internal: use `frowny-self-insert-frowny' or
 `frowny-self-insert-smiley' instead."
@@ -79,9 +87,12 @@ Internal: use `frowny-self-insert-frowny' or
 
 (defun frowny-mode--turn-on ()
   "Turn on function `frowny-mode'."
-  (when (or (eq frowny-modes t)
-            (apply #'derived-mode-p frowny-modes))
+  (when (and (not (apply #'derived-mode-p frowny-inhibit-modes))
+             (or (eq frowny-modes t)
+                 (apply #'derived-mode-p frowny-modes)))
     (frowny-mode +1)))
+
+;;; Mode
 
 ;;;###autoload
 (define-minor-mode frowny-mode
