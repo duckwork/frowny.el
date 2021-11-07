@@ -98,7 +98,7 @@ Internal: use `frowny-self-insert-frowny' or
 (define-minor-mode frowny-mode
   "Minor mode for inserting frownies."
   :init t
-  :lighter ":("
+  :lighter " :("
   :keymap (let ((map (make-sparse-keymap)))
             (define-key map "(" #'frowny-self-insert-frowny)
             (define-key map ")" #'frowny-self-insert-smiley)
