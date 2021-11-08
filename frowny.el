@@ -14,9 +14,7 @@
 ;; Everyone is permitted to do whatever with this software, without
 ;; limitation.  This software comes without any warranty whatsoever,
 ;; but with two pieces of advice:
-
 ;; - Be kind to yourself.
-
 ;; - Make good choices.
 
 ;;; Commentary:

@@ -4,15 +4,21 @@
 
 /For alphapapa, so he can insert frownies with electric-pair-mode./
 
-This package ships `frowny-mode', which enables inserting a single "(" when
-after a ":" -- meaning it'll insert :( without closing the parentheses for
-modes like =electric-pair-mode=, =paredit-mode=, and others.
+This package ships `frowny-mode', which enables inserting a single "("
+when after a ":" -- meaning it'll insert :( without closing the
+parentheses for modes like =electric-pair-mode=, =paredit-mode=, and
+others.
+
+* Version 0.3
+
+2021-11-07: Add =frowny-inhibit-modes=, so I can toggle
+=hide-details-mode= in dired.
 
 * Version 0.2
 
-Just released: Version 0.2, /now with smileys/!  Yes, if you're one of those
-happy-go-lucky people who just /has/ to smile all the time, frowny.el is now for
-you as well.  Go nuts, ya filthy animal.
+Version 0.2, /now with smileys/!  Yes, if you're one of those
+happy-go-lucky people who just /has/ to smile all the time, frowny.el is
+now for you as well.  Go nuts, ya filthy animal.
 
 * Installation
 
@@ -28,43 +34,49 @@ You might need a different form.
 
 * Use
 
-Simple as adding it to whatever modes you don't want to always insert electric
-pairs, e.g.
+Simple as adding it to whatever modes you don't want to always insert
+electric pairs, e.g.
 
 #+begin_src emacs-lisp
   (add-hook 'erc-mode-hook #'frowny-mode)
 #+end_src
 
-Or you can enable =global-frowny-mode=, which enables frowny in every buffer.
-If you want to enable =global-frowny-mode= but only for some modes, customize =frowny-modes=.
+Or you can enable =global-frowny-mode=, which enables frowny in every
+buffer.  If you want to enable =global-frowny-mode= but only for some
+modes, customize =frowny-modes=.
 
 * Customization
 
 There are a (growing?) number of customization options available for
 =frowny-mode=:
 
-- =frowny-eyes=: the regex to look for when seeing if =(= is completing a frowny.
-  Default: =\\(?::-\\|[:=]\\)=, which captures frownies like =:(=, =:-(=, and ==(=.
-  I'd recommend replacing it with an =rx= form, like this:
+- =frowny-eyes= :: the regex to look for when seeing if =(= is completing
+  a frowny.  Default: =\\(?::-\\|[:=]\\)=, which captures frownies like
+  =:(=, =:-(=, and ==(=.  I'd recommend replacing it with an =rx= form, like
+  this:
 
-#+begin_src emacs-lisp
-  (setq frowny-eyes (rx (or ":" ":-" "=" ":'-")))=.
-#+end_src
+  #+begin_src emacs-lisp
+    (setq frowny-eyes (rx (or ":" ":-" "=" ":'-")))
+  #+end_src
 
-- =frowny-eyes-looking-back-limit=: =frowny= uses =looking-back= to determine whether
-  the =(= you type is part of a frowny.  Emacs's manual recommends limiting the
-  number of characters =looking-back= searches for performance reasons, so
-  I recommend setting this number to the maximum length of the strings you have
-  as options in =frowny-eyes=.  As such, the default is 2.
-- =frowny-modes=: When enabling =global-frowny-mode=, you might not want frowny to
-  apply to every buffer.  Add modes to this list to only apply frowny to them.
-  By default, frowny applies to every mode.
+- =frowny-eyes-looking-back-limit= :: =frowny= uses =looking-back= to
+  determine whether the =(= you type is part of a frowny.  Emacs's
+  manual recommends limiting the number of characters =looking-back=
+  searches for performance reasons, so I recommend setting this number
+  to the maximum length of the strings you have as options in
+  =frowny-eyes=.  As such, the default is 2.
+- =frowny-modes= :: When enabling =global-frowny-mode=, you might not want
+  frowny to apply to every buffer.  Add modes to this list to only
+  apply frowny to them.  By default, frowny applies to every mode.
+- =frowny-inhibit-modes= :: A list of modes in which to /inhibit/ frowny
+  mode.  By default, only =special-mode= is inhibited.  I also add
+  =dired-mode= in my configuration.
 
 Of course, you can always customize these options using Emacs's Customize functionality.
 
 * Still to do
 
-- I should probably make =frowny-modes= more … complex, and allow specifying
-  modes /not/ to apply frowny to.
-- I could do a =frowny-prog-mode= that checks whether the point is in a comment
-  or not, and frowny accordingly.
+- I should probably make =frowny-modes= more ... complex, and allow
+  specifying modes /not/ to apply frowny to.
+- I could do a =frowny-prog-mode= that checks whether the point is in a
+  comment or not, and frowny accordingly.
