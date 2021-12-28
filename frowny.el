@@ -6,7 +6,7 @@
 ;; Homepage: https://github.com/duckwork/frowny.el
 ;; Keywords: convenience
 
-;; Package-Version: 0.2
+;; Package-Version: 0.3
 ;; Package-Requires: ((emacs "24.1"))
 
 ;;; License:
