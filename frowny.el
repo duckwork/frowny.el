@@ -64,7 +64,8 @@ membership in `frowny-modes'."
 Internal: use `frowny-self-insert-frowny' or
 `frowny-self-insert-smiley' instead."
   (cond
-   ((looking-back frowny-eyes frowny-eyes-looking-back-limit)
+   ((ignore-errors                      ; necessary for the looking-back-limit
+      (looking-back frowny-eyes frowny-eyes-looking-back-limit))
     (dotimes (_ number)
       (insert character)))
    (t (self-insert-command number character))))
